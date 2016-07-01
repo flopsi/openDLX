@@ -78,13 +78,15 @@ public final class MemoryFrame extends OpenDLXSimInternalFrame implements Action
         //get start-addr = first address in the memory table
         if (model.getColumnCount() > 0)
         {
+            // get and align address
             String startAddrString = model.getValueAt(0, 0).toString();
+            int startAddrAligned = Integer.decode(startAddrString) & ~0x3;
 
             try
             {
                 for (int i = 0; i < model.getRowCount(); ++i)
                 {
-                    final uint32 uint_val = MainFrame.getInstance().getOpenDLXSim().getPipeline().getMainMemory().read_u32(new uint32(Integer.parseInt(startAddrString.substring(2), 16) + i * 4));
+                    final uint32 uint_val = MainFrame.getInstance().getOpenDLXSim().getPipeline().getMainMemory().read_u32(new uint32(startAddrAligned + i * 4));
                     final Object value;
                     if (Preference.displayMemoryAsHex())
                         value = uint_val.getValueAsHexString();
@@ -153,7 +155,7 @@ public final class MemoryFrame extends OpenDLXSimInternalFrame implements Action
         {
             Integer value = ValueInput.getValueSilent(addrInput.getText());
             if (value != null)
-                startAddr = value;
+                startAddr = value & ~0x3;
 
             value = ValueInput.getValueSilent(rowInput.getText());
             if (value != null)
@@ -170,7 +172,7 @@ public final class MemoryFrame extends OpenDLXSimInternalFrame implements Action
             {
                 if (Labels.labels.containsKey(addrInput.getText()))
                 {
-                    startAddr = (Integer) Labels.labels.get(addrInput.getText());
+                    startAddr = ((Integer)Labels.labels.get(addrInput.getText())) & ~0x3;
                     clean();
                     InternalFrameFactory.getInstance().createMemoryFrame(mf);
                     new CommandLoadFrameConfigurationSysLevel(mf).execute();
