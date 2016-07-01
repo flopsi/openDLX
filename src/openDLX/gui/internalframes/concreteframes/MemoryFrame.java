@@ -120,7 +120,7 @@ public final class MemoryFrame extends OpenDLXSimInternalFrame implements Action
         inputPanel.add(addrLabel);
         addrInput = new JTextField(10);
         addrInput.addKeyListener(this);
-        addrInput.setText("" + startAddr);
+        addrInput.setText("0x" + Integer.toHexString(startAddr));
         addrInput.addFocusListener(this);
         inputPanel.add(addrInput);
         rowLabel = new JLabel("rows");
