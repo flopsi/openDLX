@@ -118,6 +118,7 @@ public class InternalFrameFactory
     {
         MemoryFrame f = new MemoryFrame(frameNames.get(MemoryFrame.class),mf);
         mf.addInternalFrame(f);
+        f.toFront();
     }
 
     private void createRegisterFrame()
