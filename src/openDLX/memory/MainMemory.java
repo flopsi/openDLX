@@ -24,6 +24,7 @@ package openDLX.memory;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.LinkedList;
 
 import org.apache.log4j.Logger;
 
@@ -33,6 +34,26 @@ import openDLX.util.PagedMemory;
 
 public class MainMemory implements MemoryInterface
 {
+    private class Request
+    {
+        public final int address;
+        public final RequestType type;
+        public int cycles;
+
+        public Request(int address, RequestType type, int cycles)
+        {
+            this.address = address;
+            this.type = type;
+            this.cycles = cycles;
+        }
+
+        public boolean equals(int address, RequestType type)
+        {
+            return this.address == address &&
+                   this.type == type;
+        }
+    };
+
     private static Logger logger = Logger.getLogger("MainMemory");
     private PagedMemory memory;
     private short memory_latency;
@@ -44,6 +65,7 @@ public class MainMemory implements MemoryInterface
         this.memory_latency = memory_latency;
         this.burst_size = burst_size;
         memory = new PagedMemory();
+        requests = new LinkedList<Request>();
 
         try
         {
@@ -221,7 +243,43 @@ public class MainMemory implements MemoryInterface
             throw new MemoryException("Unknown memory request type.");
         }
 
-        return getLatency();
+        // compute access latency
+        int latency = memory_latency * (int)Math.ceil(size/(float)burst_size);
+
+        // check if the request is already known
+        boolean found = false;
+        for(Request r : requests)
+        {
+            if (r.equals(address.getValue(), type))
+            {
+                found = true;
+                break;
+            }
+        }
+
+        // remember request, if it is not yet known
+        if (!found)
+        {
+            requests.add(new Request(address.getValue(), type, latency));
+        }
+        else
+        {
+            Request r = requests.get(0);
+            if (r.equals(address.getValue(), type))
+            {
+                // advance cycle counter of request
+                latency = --r.cycles;
+                r.cycles = latency;
+
+                // clean-up request when completed
+                if (latency == 0)
+                {
+                  requests.remove(0);
+                }
+            }
+        }
+
+        return (short)latency;
     }
 
     public short getLatency()
