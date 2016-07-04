@@ -21,13 +21,18 @@
  ******************************************************************************/
 package openDLX.gui.internalframes.renderer;
 
+import java.util.Map;
+
 import java.awt.Component;
+import java.awt.Font;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.border.Border;
 import javax.swing.table.TableCellRenderer;
+import java.awt.font.TextAttribute;
+import java.text.AttributedString;
 
 import openDLX.gui.GUI_CONST;
 
@@ -49,6 +54,15 @@ public class ClockCycleFrameTableCellRenderer implements TableCellRenderer
 
         if (label.getText() != null)
         {
+            if (label.getText().startsWith(GUI_CONST.BUBBLE))
+            {
+                Map  attributes = table.getFont().getAttributes();
+                attributes.put(TextAttribute.STRIKETHROUGH, TextAttribute.STRIKETHROUGH_ON);
+                Font newFont = new Font(attributes);
+                label.setFont(newFont);
+                label.setText(label.getText().substring(1));
+            }
+
             //FETCH
             if (label.getText().contains(GUI_CONST.FETCH))
                 label.setBackground(GUI_CONST.IF_COLOR);

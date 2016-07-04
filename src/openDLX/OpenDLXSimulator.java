@@ -42,6 +42,7 @@ import openDLX.datatypes.ExecuteMemoryData;
 import openDLX.datatypes.ExecuteOutputData;
 import openDLX.datatypes.FetchDecodeData;
 import openDLX.datatypes.FetchOutputData;
+import openDLX.datatypes.StageInstrData;
 import openDLX.datatypes.ISAType;
 import openDLX.datatypes.Instruction;
 import openDLX.datatypes.MemoryOutputData;
@@ -293,6 +294,16 @@ public class OpenDLXSimulator
         ClockCycleLog.code.clear();
     }
 
+
+    private void putCycleLog(HashMap<uint32, String> log, StageInstrData sid, String str)
+    {
+      if (sid.getInstr() == PipelineConstants.PIPELINE_BUBBLE_INSTR)
+      {
+        str = GUI_CONST.BUBBLE + str;
+      }
+      log.put(sid.getPc(), str);
+    }
+
     public void step() throws PipelineException
     {
         if (clock_cycle < sim_cycles && !caught_break)
@@ -309,11 +320,11 @@ public class OpenDLXSimulator
             stat.countCycle();
 
             HashMap<uint32, String> h = new HashMap<>();
-            h.put(getPipeline().getFetchDecodeLatch().element().getPc(), GUI_CONST.FETCH);
-            h.put(getPipeline().getDecodeExecuteLatch().element().getPc(), GUI_CONST.DECODE);
-            h.put(getPipeline().getExecuteMemoryLatch().element().getPc(), GUI_CONST.EXECUTE);
-            h.put(getPipeline().getMemoryWriteBackLatch().element().getPc(), GUI_CONST.MEMORY);
-            h.put(getPipeline().getWriteBackLatch().element().getPc(), GUI_CONST.WRITEBACK);
+            putCycleLog(h, getPipeline().getFetchDecodeLatch().element(), GUI_CONST.FETCH);
+            putCycleLog(h, getPipeline().getDecodeExecuteLatch().element(), GUI_CONST.DECODE);
+            putCycleLog(h, getPipeline().getExecuteMemoryLatch().element(), GUI_CONST.EXECUTE);
+            putCycleLog(h, getPipeline().getMemoryWriteBackLatch().element(), GUI_CONST.MEMORY);
+            putCycleLog(h, getPipeline().getWriteBackLatch().element(), GUI_CONST.WRITEBACK);
             ClockCycleLog.log.add(h);
             ClockCycleLog.code.add(getPipeline().getFetchDecodeLatch().element().getPc());
         }

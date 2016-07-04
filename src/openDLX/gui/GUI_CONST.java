@@ -25,7 +25,7 @@ import java.awt.Color;
 
 public interface GUI_CONST
 {
-
+    static final String BUBBLE = "!";
     static final String FETCH = "IF";
     static final String DECODE = "ID";
     static final String EXECUTE = "EX";
