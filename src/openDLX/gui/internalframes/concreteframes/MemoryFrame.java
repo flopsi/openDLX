@@ -38,8 +38,11 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.TableModel;
 
+import openDLX.RegisterSet;
 import openDLX.asm.Labels;
 import openDLX.datatypes.uint32;
+import openDLX.datatypes.uint8;
+import openDLX.datatypes.ArchCfg;
 import openDLX.exception.MemoryException;
 import openDLX.gui.MainFrame;
 import openDLX.gui.Preference;
@@ -62,11 +65,13 @@ public final class MemoryFrame extends OpenDLXSimInternalFrame implements Action
     private JTextField addrInput;
     private JLabel rowLabel;
     private JLabel addrLabel;
+    private RegisterSet rs;
     private MainFrame mf;
 
     public MemoryFrame(String name, MainFrame mf)
     {
         super(name, false);
+        this.rs = mf.getOpenDLXSim().getPipeline().getRegisterSet();
         this.mf = mf;
         initialize();
     }
@@ -151,9 +156,10 @@ public final class MemoryFrame extends OpenDLXSimInternalFrame implements Action
     @Override
     public void actionPerformed(ActionEvent e)
     {
+        String addrString = addrInput.getText().trim().toLowerCase();
         try
         {
-            Integer value = ValueInput.getValueSilent(addrInput.getText());
+            Integer value = ValueInput.getValueSilent(addrString);
             if (value != null)
                 startAddr = value & ~0x3;
 
@@ -170,9 +176,9 @@ public final class MemoryFrame extends OpenDLXSimInternalFrame implements Action
             boolean error = true;
             if (Labels.labels != null)
             {
-                if (Labels.labels.containsKey(addrInput.getText()))
+                if (Labels.labels.containsKey(addrString))
                 {
-                    startAddr = ((Integer)Labels.labels.get(addrInput.getText())) & ~0x3;
+                    startAddr = ((Integer)Labels.labels.get(addrString)) & ~0x3;
                     clean();
                     InternalFrameFactory.getInstance().createMemoryFrame(mf);
                     new CommandLoadFrameConfigurationSysLevel(mf).execute();
@@ -180,9 +186,43 @@ public final class MemoryFrame extends OpenDLXSimInternalFrame implements Action
                 }
             }
 
+            // check if the input refers to register name or number
+            if (error && addrString.startsWith("$"))
+            {
+                String registerName = addrString.substring(1);
+                int registerNumber = 0;
+
+                try
+                {
+                    registerNumber = Integer.decode(registerName);
+                    error = false;
+                }
+                catch (NumberFormatException nf)
+                {
+                    registerNumber = 0;
+                    for(String s : ArchCfg.GP_NAMES_MIPS)
+                    {
+                        if(registerName.equals(s))
+                        {
+                          error = false;
+                          break;
+                        }
+                        registerNumber++;
+                    }
+                }
+
+                if (!error)
+                {
+                    final uint32 register_value = rs.read(new uint8(registerNumber));
+                    startAddr = register_value.getValue() & ~0x3;
+                    clean();
+                    InternalFrameFactory.getInstance().createMemoryFrame(mf);
+                    new CommandLoadFrameConfigurationSysLevel(mf).execute();
+                }
+            }
+
             if (error)
-                JOptionPane.showMessageDialog(this, "for input only hex (0x..) " +
-                        "address, decimal address or label (e.g. \"main\") allowed");
+                JOptionPane.showMessageDialog(this, "for input only hex (0x..) address, decimal address, register names (e.g., \"$3\" or \"$sp\"), or labels (e.g. \"main\") allowed");
         }
     }
 
