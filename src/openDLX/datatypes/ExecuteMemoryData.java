@@ -24,7 +24,7 @@ package openDLX.datatypes;
 import openDLX.PipelineConstants;
 
 
-public class ExecuteMemoryData
+public class ExecuteMemoryData implements StageInstrData
 {
 
 	private Instruction inst;
@@ -40,6 +40,11 @@ public class ExecuteMemoryData
 		this.alu_out = alu_out;
 		this.store_value = store_value;
 		this.jump = jump;
+	}
+
+	public uint32 getInstr()
+	{
+		return inst.getInstr();
 	}
 
 	public Instruction getInst()

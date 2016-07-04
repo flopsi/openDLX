@@ -22,7 +22,7 @@
 package openDLX.datatypes;
 
 
-public class MemoryWritebackData
+public class MemoryWritebackData implements StageInstrData
 {
 
 	private Instruction inst;
@@ -38,6 +38,11 @@ public class MemoryWritebackData
 		this.alu_out = alu_out;
 		this.ld_result = ld_result;
 		this.jump = jump;
+	}
+
+	public uint32 getInstr()
+	{
+		return inst.getInstr();
 	}
 
 	public Instruction getInst()

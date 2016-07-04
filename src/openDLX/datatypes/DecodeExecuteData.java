@@ -23,7 +23,7 @@ package openDLX.datatypes;
 
 import openDLX.PipelineConstants;
 
-public class DecodeExecuteData
+public class DecodeExecuteData implements StageInstrData
 {
 
 	private Instruction inst;
@@ -43,6 +43,11 @@ public class DecodeExecuteData
 		this.branch_ctrl_in_a = branch_ctrl_in_a;
 		this.branch_ctrl_in_b = branch_ctrl_in_b;
 		this.store_value = store_value;
+	}
+
+	public uint32 getInstr()
+	{
+		return inst.getInstr();
 	}
 
 	public Instruction getInst()

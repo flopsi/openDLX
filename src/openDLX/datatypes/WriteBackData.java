@@ -21,7 +21,7 @@
  ******************************************************************************/
 package openDLX.datatypes;
 
-public class WriteBackData
+public class WriteBackData implements StageInstrData
 {
 	private Instruction inst;
 	private uint32 pc;
@@ -38,6 +38,11 @@ public class WriteBackData
 		this.ld_result = ld_result;
 	}
 
+
+	public uint32 getInstr()
+	{
+		return inst.getInstr();
+	}
 
 	public Instruction getInst()
 	{

@@ -21,32 +21,8 @@
  ******************************************************************************/
 package openDLX.datatypes;
 
-import openDLX.PipelineConstants;
-
-public class FetchDecodeData implements StageInstrData
+public interface StageInstrData
 {
-	private uint32 instr;
-	private uint32 pc;
-
-	public FetchDecodeData(uint32 instr, uint32 pc)
-	{
-		this.instr = instr;
-		this.pc = pc;
-	}
-
-	public uint32 getInstr()
-	{
-		return instr;
-	}
-
-	public uint32 getPc()
-	{
-		return pc;
-	}
-
-	public void flush()
-	{
-		instr = PipelineConstants.PIPELINE_BUBBLE_INSTR;
-		pc = PipelineConstants.PIPELINE_BUBBLE_ADDR;
-	}
+  public uint32 getInstr();
+  public uint32 getPc();
 }
