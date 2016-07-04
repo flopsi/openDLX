@@ -62,6 +62,8 @@ public class Memory
 
 		uint32 ld_result = new uint32(0);
 
+		boolean stall = false;
+
 		if (inst.getLoad())
 		{
 			if(dmem.getRequestDelay(RequestType.DATA_RD, alu_outLO)==0)
@@ -97,6 +99,7 @@ public class Memory
 			else
 			{
 				// stall
+				stall = true;
 			}
 		}
 		else if (inst.getStore())
@@ -220,6 +223,7 @@ public class Memory
 			else
 			{
 				// stall
+				stall = true;
 			}
 		}
 		else
@@ -229,6 +233,6 @@ public class Memory
 
 		MemoryWritebackData mwd = new MemoryWritebackData(inst, pc, alu_out, ld_result, jump);
 
-		return new MemoryOutputData(mwd);
+		return new MemoryOutputData(mwd, stall);
 	}
 }

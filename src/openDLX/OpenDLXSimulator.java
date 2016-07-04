@@ -478,6 +478,7 @@ public class OpenDLXSimulator
 
         // MEMORY STAGE
         mod = pipeline.getMemoryStage().doCycle();
+        stall |= mod.getStall();
         // MEMORY STAGE
 
         // LATCH

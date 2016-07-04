@@ -23,11 +23,12 @@ package openDLX.datatypes;
 
 public class MemoryOutputData
 {
-
+	private boolean stall;
 	private MemoryWritebackData mwd;
 
-	public MemoryOutputData(MemoryWritebackData mwd)
+	public MemoryOutputData(MemoryWritebackData mwd, boolean stall)
 	{
+		this.stall = stall;
 		this.mwd = mwd;
 	}
 
@@ -36,4 +37,8 @@ public class MemoryOutputData
 		return mwd;
 	}
 
+	public boolean getStall()
+	{
+		return stall;
+	}
 }
