@@ -88,7 +88,6 @@ public class DecodeExecuteData implements StageInstrData
 	public void flush()
 	{
 		inst = new Instruction(PipelineConstants.PIPELINE_BUBBLE_INSTR);
-		pc = PipelineConstants.PIPELINE_BUBBLE_ADDR;
 		alu_in_a = new uint32(0);
 		alu_in_b = new uint32(0);
 		store_value = new uint32(0);

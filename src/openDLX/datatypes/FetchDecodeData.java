@@ -47,6 +47,5 @@ public class FetchDecodeData implements StageInstrData
 	public void flush()
 	{
 		instr = PipelineConstants.PIPELINE_BUBBLE_INSTR;
-		pc = PipelineConstants.PIPELINE_BUBBLE_ADDR;
 	}
 }

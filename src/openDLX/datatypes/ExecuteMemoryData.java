@@ -75,7 +75,6 @@ public class ExecuteMemoryData implements StageInstrData
 	public void flush()
 	{
 		inst = new Instruction(PipelineConstants.PIPELINE_BUBBLE_INSTR);
-		pc = PipelineConstants.PIPELINE_BUBBLE_ADDR;
 		alu_out[0] = new uint32(0);
 		alu_out[1] = new uint32(0);
 		store_value = new uint32(0);

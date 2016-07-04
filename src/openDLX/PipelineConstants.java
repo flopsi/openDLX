@@ -110,7 +110,6 @@ public interface PipelineConstants
 	public static final int DLX_TRAP_PRINTF = 5;
 	
 	public static final uint32 PIPELINE_BUBBLE_INSTR = new uint32(0xffffffff);
-	public static final uint32 PIPELINE_BUBBLE_ADDR = new uint32(0xffffffff);
 	
 	public static final int ADDR_WIDTH = 32;
 	// DO NOT CHANGE THE WORD SIZE. IT HAS TO BE 4
