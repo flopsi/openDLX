@@ -142,7 +142,8 @@ public class WriteBack
 		
 		// count all instructions that are no NOP
 		// TODO: This only works, because the write back currently cannot be stalled
-		if(inst.getOpNormal() != OpcodeNORMAL.NOP)
+		if(inst.getOpNormal() != OpcodeNORMAL.NOP &&
+		   inst.getInstr() != PipelineConstants.PIPELINE_BUBBLE_INSTR)
 		{
 			stat.countInstruction();
 		}
