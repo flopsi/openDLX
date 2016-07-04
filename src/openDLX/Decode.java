@@ -997,7 +997,7 @@ public class Decode
 					current_inst.setALUPortA(ALUPort.ZERO);
 					current_inst.setALUPortB(ALUPort.ZERO);
 
-					logger.info("Inserting is DLX pipeline bubble: " + current_inst.getInstr());
+					logger.info("Inserting MIPS pipeline bubble: " + current_inst.getInstr());
 					
 				}
 				else
@@ -1021,7 +1021,7 @@ public class Decode
 				current_inst.setALUPortA(ALUPort.ZERO);
 				current_inst.setALUPortB(ALUPort.ZERO);
 				
-				logger.info("Inserting is DLX pipeline bubble: " + current_inst.getInstr());
+				logger.info("Inserting DLX pipeline bubble: " + current_inst.getInstr());
 				break;
 			default:
 				op = (OpcodeNORMAL.UNKNOWN);
