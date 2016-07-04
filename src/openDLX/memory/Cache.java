@@ -466,7 +466,7 @@ public abstract class Cache implements MemoryInterface {
 	}
 	
 	
-	public short getRequestDelay(RequestType type, uint32 addr) throws MemoryException 
+	public short getRequestDelay(RequestType type, uint32 addr, int size) throws MemoryException
 	{
 		short latency = 0;
 		
@@ -485,7 +485,7 @@ public abstract class Cache implements MemoryInterface {
 			}
 			else
 			{
-				latency = mem.getRequestDelay(type, addr);
+				latency = mem.getRequestDelay(type, new uint32(getCacheLineAddr(addr)), line_size);
 			}
 			break;
 		}
@@ -504,7 +504,7 @@ public abstract class Cache implements MemoryInterface {
 				}
 				else
 				{
-					latency = mem.getRequestDelay(type, addr);
+					latency = mem.getRequestDelay(type, new uint32(getCacheLineAddr(addr)), line_size);
 				}
 			}
 			else if(type == RequestType.DATA_WR)
@@ -516,7 +516,7 @@ public abstract class Cache implements MemoryInterface {
 //					latency = 0;
 //					break;
 				case WRITE_THROUGH:
-					latency = mem.getRequestDelay(type, addr);
+					latency = mem.getRequestDelay(type, new uint32(getCacheLineAddr(addr)), line_size);
 					break;
 				default:
 					throw new CacheException("Currently only write through caches are supported, but cache write policy is: " + write_policy);

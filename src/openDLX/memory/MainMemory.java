@@ -209,7 +209,7 @@ public class MainMemory implements MemoryInterface
         return new uint32(-1);
     }
 
-    public short getRequestDelay(RequestType type, uint32 address) throws MemoryException
+    public short getRequestDelay(RequestType type, uint32 address, int size) throws MemoryException
     {
         switch (type)
         {

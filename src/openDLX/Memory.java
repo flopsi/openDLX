@@ -66,7 +66,7 @@ public class Memory
 
 		if (inst.getLoad())
 		{
-			if(dmem.getRequestDelay(RequestType.DATA_RD, alu_outLO)==0)
+			if(dmem.getRequestDelay(RequestType.DATA_RD, alu_outLO, 4)==0)
 			{
 				switch(inst.getMemoryWidth())
 				{
@@ -104,7 +104,7 @@ public class Memory
 		}
 		else if (inst.getStore())
 		{
-			if(dmem.getRequestDelay(RequestType.DATA_WR, alu_outLO)==0)
+			if(dmem.getRequestDelay(RequestType.DATA_WR, alu_outLO, 4)==0)
 			{
 				switch(inst.getMemoryWidth())
 				{

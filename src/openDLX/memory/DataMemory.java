@@ -121,9 +121,9 @@ public class DataMemory
 		}
 	}
 
-	public int getRequestDelay(RequestType type, uint32 addr) throws MemoryException
+	public int getRequestDelay(RequestType type, uint32 addr, int size) throws MemoryException
 	{
-		return mem.getRequestDelay(type, addr);
+		return mem.getRequestDelay(type, addr, size);
 	}
 
 	public uint8 read_u8(uint32 addr, boolean log_output) throws MemoryException

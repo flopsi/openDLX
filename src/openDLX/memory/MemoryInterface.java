@@ -28,7 +28,7 @@ import openDLX.exception.MemoryException;
 
 public interface MemoryInterface {
 
-	short getRequestDelay(RequestType instrRd, uint32 addr) throws MemoryException;
+	short getRequestDelay(RequestType instrRd, uint32 addr, int size) throws MemoryException;
 
 	uint32 read_u32(uint32 addr) throws MemoryException;
 

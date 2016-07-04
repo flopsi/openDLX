@@ -117,7 +117,7 @@ public class InstructionMemory
 
 	public int getRequestDelay(uint32 addr) throws MemoryException
 	{
-		return mem.getRequestDelay(RequestType.INSTR_RD, addr);
+		return mem.getRequestDelay(RequestType.INSTR_RD, addr, 4);
 	}
 	
 	public uint32 read_u32(uint32 addr) throws MemoryException
