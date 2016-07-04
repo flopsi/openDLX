@@ -25,11 +25,13 @@ public class FetchOutputData
 {
 	private FetchDecodeData fdd;
 	private boolean[] flush;
+	private boolean stall;
 
-	public FetchOutputData(FetchDecodeData fdd, boolean[] flush)
+	public FetchOutputData(FetchDecodeData fdd, boolean[] flush, boolean stall)
 	{
 		this.fdd = fdd;
 		this.flush = flush;
+		this.stall = stall;
 	}
 
 	public FetchDecodeData getFdd()
@@ -42,4 +44,9 @@ public class FetchOutputData
 		return flush;
 	}
 
+
+	public boolean getStall()
+	{
+		return stall;
+	}
 }

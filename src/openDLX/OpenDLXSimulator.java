@@ -445,6 +445,7 @@ public class OpenDLXSimulator
         // flush the decode on jump
         // flush the execute when a conditional "likely" branch is not taken
         fod = pipeline.getFetchStage().doCycle();
+        stall = fod.getStall();
         // FETCH STAGE
 
         // LATCH

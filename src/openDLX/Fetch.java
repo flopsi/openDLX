@@ -153,18 +153,20 @@ public class Fetch {
 		}
 
 		uint32 instr = doFetch();
-		if(instr != null)
+		boolean stall = instr == null;
+		if(!stall)
 		{
 			logger.debug("PC: " + getPc().getValueAsHexString() + " fetched instruction " + instr.getValueAsHexString());
 		}
 		else
 		{
 			// stalling
+			instr = new uint32(0);
 		}
 		
-		FetchDecodeData fdd = new FetchDecodeData(instr, getPc());
+		FetchDecodeData fdd = new FetchDecodeData(instr , getPc());
 		
-		return new FetchOutputData(fdd, flush);
+		return new FetchOutputData(fdd, flush, stall);
 	}
         
         
