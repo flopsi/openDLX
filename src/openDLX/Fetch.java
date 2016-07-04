@@ -60,13 +60,18 @@ public class Fetch {
 	
 	private uint32 doFetch() throws MemoryException
 	{
-		uint32 instr = null;
 		if(imem.getRequestDelay(program_counter)==0)
 		{
-			instr = imem.read_u32(program_counter);
+			// fetch from memory
+			uint32 instr = imem.read_u32(program_counter);
 			stat.countFetch();
+			return instr;
 		}
-		return new uint32(instr);
+		else
+		{
+			// stall
+			return null;
+		}
 	}
 	
 	public void increasePC()
