@@ -6,7 +6,7 @@
     <property name="source" value="7"/>
     <path id="openDLX.classpath">
         <pathelement location="bin"/>
-        <pathelement location="lib_local/apache-log4j-1.2.17/log4j-1.2.17.jar"/>
+        <pathelement location="/usr/share/java/log4j-1.2.17.jar"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
@@ -43,8 +43,8 @@
 			<copy file="log4j_full.properties" tofile="./bin/openDLX/log4j_full.properties"/>
 			<copy file="log4j_info.properties" tofile="./bin/openDLX/log4j_info.properties"/>
 			<copy file="log4j_warn.properties" tofile="./bin/openDLX/log4j_warn.properties"/>
-			<copy file="lib_local/apache-log4j-1.2.17/LICENSE" tofile="./bin/META-INF/LICENSE.log4j"/>
-			<copy file="lib_local/apache-log4j-1.2.17/NOTICE" tofile="./bin/META-INF/NOTICE.log4j"/>
+			<copy file="/usr/share/doc/packages/log4j/LICENSE" tofile="./bin/META-INF/LICENSE.log4j"/>
+			<copy file="/usr/share/doc/packages/log4j/NOTICE" tofile="./bin/META-INF/NOTICE.log4j"/>
 		<mkdir dir="./bin/img/"/>
 			<copy file="img/openDLX_small.png" tofile="./bin/img/openDLX_small.png"/>
 			<copy file="img/openDLX-quadrat128x128.png" tofile="./bin/img/openDLX-quadrat128x128.png"/>
@@ -57,18 +57,18 @@
 				<attribute name="Implementation-Title" value="openDLX"/>
 			</manifest>
             <fileset dir="./bin"/>
-			<zipfileset includes="**/*.class" src="lib_local/apache-log4j-1.2.17/log4j-1.2.17.jar"/>
+			<zipfileset includes="**/*.class" src="/usr/share/java/log4j-1.2.17.jar"/>
         </jar>
     </target>
     <target depends="build,create_run_jar" name="build_and_package"/>
-	<target name="generate-doxygen-docs">
+<!--	<target name="generate-doxygen-docs">
 		  <taskdef name="doxygen" classname="org.doxygen.tools.DoxygenTask" 
 		    classpath="lib_local/ant-doxygen/lib/ant_doxygen.jar" />
 		  <doxygen configFilename="openDLX.Doxyfile">
 		           <property name="INPUT" value="${srcdir}" />
 		           <property name="RECURSIVE" value="yes" />
 		  </doxygen>
-	  </target>
+	  </target>-->
 	  <target depends="build_and_package" name="deploy">
 		  <delete file="openDLX_deploy.zip"/>
 		  <zip destfile="openDLX_deploy.zip">
@@ -82,5 +82,5 @@
 			  <zipfileset dir="./apps/mips_apps/" prefix="apps/mips_apps" includes="**/*.cfg, **/*.c, **/*.h, **/*.s, **/*.sh, **/Makefile, **/*.txt, **/README"/>
 		  </zip>
 	  </target>
-    <target depends="build_and_package,generate-doxygen-docs,deploy" name="all"/>
+    <target depends="build_and_package,deploy" name="all"/>
 </project>
