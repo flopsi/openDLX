@@ -195,16 +195,27 @@ public final class ClockCycleFrame extends OpenDLXSimInternalFrame implements GU
         DLXAssembler asm = new DLXAssembler();
 
         int i = 0;
+        uint32 past_addr = null;
         for (uint32 addr : ClockCycleLog.code)
         {
             try
             {
+                // get the textual representation of the current instruction
                 uint32 inst = openDLXSim.getPipeline().getInstructionMemory().read_u32(addr);
                 String instStr = asm.Instr2Str(inst.getValue());
-                addrModel.addRow(new String[] { addr.getValueAsHexString() });
-                codeModel.addRow(new String[] { instStr });
+
+                // add a new column (in all cases, since a cycle passed).
                 model.addColumn(i);
-                model.addRow(new String[] { "" });
+
+                // add a new line for each NEW instruction, i.e., reuse the same
+                // line when the same address appears more than once.
+                if (past_addr != addr)
+                {
+                    addrModel.addRow(new String[] { addr.getValueAsHexString() });
+                    codeModel.addRow(new String[] { instStr });
+                    model.addRow(new String[] { "" });
+                    past_addr = addr;
+                }
 
                 final HashMap<uint32, String> h = ClockCycleLog.log.get(i);
                 for (uint32 checkAddr : h.keySet())
