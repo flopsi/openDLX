@@ -36,10 +36,13 @@ public class MainMemory implements MemoryInterface
     private static Logger logger = Logger.getLogger("MainMemory");
     private PagedMemory memory;
     private short memory_latency;
+    private short burst_size;
+    private LinkedList<Request> requests;
 
-    public MainMemory(String raw_file, int raw_file_code_start_address, short memory_latency) throws MemoryException
+    public MainMemory(String raw_file, int raw_file_code_start_address, short memory_latency, short burst_size) throws MemoryException
     {
         this.memory_latency = memory_latency;
+        this.burst_size = burst_size;
         memory = new PagedMemory();
 
         try

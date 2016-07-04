@@ -133,7 +133,7 @@ public class OpenDLXSimulator
         logger.info("loading:" + config.getProperty("file"));
 
         pipeline = new PipelineContainer();
-        pipeline.setMainMemory(new MainMemory(config.getProperty("file"), stringToUint32(config.getProperty("code_start_addr")).getValue(), (short) stringToUint32(config.getProperty("memory_latency")).getValue()));
+        pipeline.setMainMemory(new MainMemory(config.getProperty("file"), stringToUint32(config.getProperty("code_start_addr")).getValue(), (short) stringToUint32(config.getProperty("memory_latency")).getValue(), (short) stringToUint32(config.getProperty("memory_burst_size")).getValue()));
         pipeline.setInstructionMemory(new InstructionMemory(pipeline.getMainMemory(), config));
         pipeline.setDataMemory(new DataMemory(pipeline.getMainMemory(), config));
         pipeline.setFetchStage(new Fetch(new uint32(stringToUint32(config.getProperty("entry_point"))), pipeline.getInstructionMemory()));
@@ -231,7 +231,7 @@ public class OpenDLXSimulator
         sim_cycles = new Integer(config.getProperty("cycles"));
 
         pipeline = new PipelineContainer();
-        pipeline.setMainMemory(new MainMemory(config.getProperty("file"), stringToUint32(config.getProperty("code_start_addr")).getValue(), (short) stringToUint32(config.getProperty("memory_latency")).getValue()));
+        pipeline.setMainMemory(new MainMemory(config.getProperty("file"), stringToUint32(config.getProperty("code_start_addr")).getValue(), (short) stringToUint32(config.getProperty("memory_latency")).getValue(), (short) stringToUint32(config.getProperty("memory_burst_size")).getValue()));
         pipeline.setInstructionMemory(new InstructionMemory(pipeline.getMainMemory(), config));
         pipeline.setDataMemory(new DataMemory(pipeline.getMainMemory(), config));
         pipeline.setFetchStage(new Fetch(new uint32(stringToUint32(config.getProperty("entry_point"))), pipeline.getInstructionMemory()));
@@ -698,6 +698,10 @@ public class OpenDLXSimulator
         if (!config.containsKey("memory_latency"))
         {
             config.setProperty("memory_latency", "0");
+        }
+        if (!config.containsKey("memory_burst_size"))
+        {
+            config.setProperty("memory_burst_size", "1");
         }
 
         if (!config.containsKey("icache_use"))
