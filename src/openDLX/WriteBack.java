@@ -140,14 +140,6 @@ public class WriteBack
 			reg_set.printContent();
 		}
 		
-		// count all instructions that are no NOP
-		// TODO: This only works, because the write back currently cannot be stalled
-		if(inst.getOpNormal() != OpcodeNORMAL.NOP &&
-		   inst.getInstr() != PipelineConstants.PIPELINE_BUBBLE_INSTR)
-		{
-			stat.countInstruction();
-		}
-		
 		WriteBackData wbd = new WriteBackData(inst, pc, alu_out, ld_result);
 		
 		return new WritebackOutputData(wbd, caught_break);

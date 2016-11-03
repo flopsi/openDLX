@@ -501,7 +501,15 @@ public class OpenDLXSimulator
 
         if (!stall)
         {
-            // in case the execute determines that an instruction requires to forward a value from a load that is the direct predecessor
+            // statistics regarding instruction counts
+            MemoryWritebackData mwd = memory_writeback_latch.element();
+            Instruction mwd_inst = mwd.getInst();
+            if(mwd_inst.getInstr() != PipelineConstants.PIPELINE_BUBBLE_INSTR)
+            {
+              stat.countInstruction();
+            }
+
+            // in case that execute determines that an instruction requires to forward a value from a load that is the direct predecessor
             // a bubble needs to be inserted, since no forwarding is possible in the load delay slot
             if (eod.getStall()[PipelineConstants.FETCH_STAGE] && eod.getStall()[PipelineConstants.DECODE_STAGE] && eod.getStall()[PipelineConstants.EXECUTE_STAGE])
             {
