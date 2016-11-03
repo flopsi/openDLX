@@ -81,7 +81,7 @@ public class CodeTableFactory extends TableFactory
             for (int i = start; i < end; i += 4)
             {
                 final uint32 addr = new uint32(i);
-                final uint32 inst = openDLXSim.getPipeline().getInstructionMemory().read_u32(addr);
+                final uint32 inst = openDLXSim.getPipeline().getMainMemory().read_u32(addr);
 
                 model.addRow(new Object[]
                         {

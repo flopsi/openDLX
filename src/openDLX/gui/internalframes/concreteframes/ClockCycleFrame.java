@@ -201,7 +201,7 @@ public final class ClockCycleFrame extends OpenDLXSimInternalFrame implements GU
             try
             {
                 // get the textual representation of the current instruction
-                uint32 inst = openDLXSim.getPipeline().getInstructionMemory().read_u32(addr);
+                uint32 inst = openDLXSim.getPipeline().getMainMemory().read_u32(addr);
                 String instStr = asm.Instr2Str(inst.getValue());
 
                 // add a new column (in all cases, since a cycle passed).
