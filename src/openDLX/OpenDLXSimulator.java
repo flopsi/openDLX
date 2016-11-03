@@ -488,8 +488,12 @@ public class OpenDLXSimulator
         // BRANCH PREDICTOR MODULE: lookup for jump target and update prediction tables
 
         // MEMORY STAGE
-        mod = pipeline.getMemoryStage().doCycle();
-        stall |= mod.getStall();
+        mod = null;
+        if (!stall)
+        {
+          mod = pipeline.getMemoryStage().doCycle();
+          stall |= mod.getStall();
+        }
         // MEMORY STAGE
 
         // LATCH
