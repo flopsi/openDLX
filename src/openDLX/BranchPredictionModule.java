@@ -276,9 +276,6 @@ public class BranchPredictionModule
 		// lookup for jump target
 		BranchPredictionModuleOutputData bpmod = lookupTables();
 		
-		// update prediction tables
-		updateTables();
-		
 		return bpmod;
 	}
 	

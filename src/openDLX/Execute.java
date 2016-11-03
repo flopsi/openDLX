@@ -387,27 +387,6 @@ public class Execute
 		boolean jump = branch_control.checkBranch(inst, branch_ctrl_in_a, branch_ctrl_in_b);
 		// BRANCH CONTROL END
 
-		// count the jumps if there is a branch
-		if(inst.getBranch()==true)
-		{
-			if(jump)
-			{
-				stat.countJumpTaken();
-			}
-			else
-			{
-				stat.countJumpNotTaken();
-			}
-			if(inst.getBranchLikely())
-			{
-				stat.countJumpLikely();
-			}
-			if(inst.getBranchAndLink())
-			{
-				stat.countJumpLink();
-			}
-		}
-		
 		// check if branch prediction was correct
 		BranchPredictionModuleExecuteData bpmed = branchprediction_execute_latch.element();
 		boolean mispredicted_branch = false;
@@ -477,7 +456,7 @@ public class Execute
 			}
 		}
 		
-		return new ExecuteOutputData(emd, efd, ebd, stall_out);
+		return new ExecuteOutputData(emd, efd, ebd, stall_out, jump);
 
 	}
 

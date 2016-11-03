@@ -30,13 +30,16 @@ public class ExecuteOutputData
 	
 	// asynchronous output
 	private boolean[] stall;
+
+	private boolean jump;
 	
-	public ExecuteOutputData(ExecuteMemoryData emd, ExecuteFetchData efd, ExecuteBranchPredictionData ebd, boolean[] stall)
+	public ExecuteOutputData(ExecuteMemoryData emd, ExecuteFetchData efd, ExecuteBranchPredictionData ebd, boolean[] stall, boolean jump)
 	{
 		this.emd = emd;
 		this.efd = efd;
 		this.ebd = ebd;
 		this.stall = stall;
+		this.jump = jump;
 	}
 
 	public ExecuteMemoryData getEmd()
@@ -58,4 +61,9 @@ public class ExecuteOutputData
 	{
 		return stall;
 	}
+
+	public boolean getJump()
+	{
+		return jump;
+  }
 }

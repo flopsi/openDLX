@@ -528,6 +528,32 @@ public class OpenDLXSimulator
             }
             else
             {
+                // statistics related to branches
+                DecodeExecuteData ded = decode_execute_latch.element();
+                Instruction ded_inst = ded.getInst();
+                // count the jumps if there is a branch
+                if(ded_inst.getBranch()==true)
+                {
+                  if(eod.getJump())
+                  {
+                    stat.countJumpTaken();
+                  }
+                  else
+                  {
+                    stat.countJumpNotTaken();
+                  }
+                  if(ded_inst.getBranchLikely())
+                  {
+                    stat.countJumpLikely();
+                  }
+                  if(ded_inst.getBranchAndLink())
+                  {
+                    stat.countJumpLink();
+                  }
+                }
+
+                pipeline.getBranchPredictionModule().updateTables();
+
                 // remove input from latches
                 fetch_decode_latch.remove();
                 decode_execute_latch.remove();
