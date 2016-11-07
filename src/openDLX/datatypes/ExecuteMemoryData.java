@@ -72,9 +72,14 @@ public class ExecuteMemoryData implements StageInstrData
 		return jump;
 	}
 
-	public void flush()
+	public void flush(boolean load)
 	{
 		inst = new Instruction(PipelineConstants.PIPELINE_BUBBLE_INSTR);
+		if (load)
+		{
+			// make bubbles related to loads disappear in the GUI
+			pc = new uint32(0);
+		}
 		alu_out[0] = new uint32(0);
 		alu_out[1] = new uint32(0);
 		store_value = new uint32(0);

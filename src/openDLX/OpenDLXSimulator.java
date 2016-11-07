@@ -299,7 +299,11 @@ public class OpenDLXSimulator
     {
       if (sid.getInstr() == PipelineConstants.PIPELINE_BUBBLE_INSTR)
       {
-        str = GUI_CONST.BUBBLE + str;
+        // only display bubbles of flushed instructions
+        if (sid.getPc().getValue() != 0)
+          str = GUI_CONST.BUBBLE + str;
+        else
+          str = "X";
       }
       log.put(sid.getPc(), str);
     }
@@ -528,7 +532,7 @@ public class OpenDLXSimulator
                 writeback_latch.add(wod.getWbd());
 
                 // kick out the memory load instruction (since it was executed)
-                execute_memory_latch.element().flush();
+                execute_memory_latch.element().flush(true);
             }
             else
             {
