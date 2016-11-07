@@ -340,6 +340,7 @@ public class Instruction {
 				break;
 			case LOAD_IMMEDIATE:
 				strBuf.append(' ');
+				strBuf.append('r');
 				strBuf.append(rt());
 				strBuf.append(',');
 				strBuf.append(offset2k());
