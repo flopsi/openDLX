@@ -64,15 +64,15 @@ public class InstructionMemory
 		{
 
 			int lineSize = 8;
-			if(config.getProperty("icache_line_size")!=null)
+			if(config.getProperty("icache_block_size")!=null)
 			{
-				lineSize = Integer.decode(config.getProperty("icache_line_size"));
+				lineSize = Integer.decode(config.getProperty("icache_block_size"));
 			}
 
 			int lineNo = 32;
-			if(config.getProperty("icache_line_number")!=null)
+			if(config.getProperty("icache_total_block_number")!=null)
 			{
-				lineNo = Integer.decode(config.getProperty("icache_line_number"));
+				lineNo = Integer.decode(config.getProperty("icache_total_block_number"));
 			}
 
 			int associativity = 1;
